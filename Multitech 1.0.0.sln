@@ -1,0 +1,29 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31702.278
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Multitech 1.0.0", "Multitech 1.0.0.csproj", "{D3A1B538-EF52-4280-B394-92FBDBB9AD90}"
+EndProject
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "Installer Load Cell Multitek", "..\Installer Load Cell Multitek\Installer Load Cell Multitek.vdproj", "{89BFF93B-F644-48DF-89AC-2FED8219F74D}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{D3A1B538-EF52-4280-B394-92FBDBB9AD90}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D3A1B538-EF52-4280-B394-92FBDBB9AD90}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D3A1B538-EF52-4280-B394-92FBDBB9AD90}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D3A1B538-EF52-4280-B394-92FBDBB9AD90}.Release|Any CPU.Build.0 = Release|Any CPU
+		{89BFF93B-F644-48DF-89AC-2FED8219F74D}.Debug|Any CPU.ActiveCfg = Debug
+		{89BFF93B-F644-48DF-89AC-2FED8219F74D}.Release|Any CPU.ActiveCfg = Release
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {578B9795-F1CC-45BE-A89A-20334CEDAE42}
+	EndGlobalSection
+EndGlobal
