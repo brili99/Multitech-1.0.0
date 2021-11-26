@@ -44,6 +44,8 @@ namespace Multitech_1._0._0
             System.Windows.Forms.DataVisualization.Charting.Series series10 = new System.Windows.Forms.DataVisualization.Charting.Series();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.btnFormKalibrasi = new System.Windows.Forms.Button();
+            this.chkLogging = new System.Windows.Forms.CheckBox();
             this.btnBukaLog = new System.Windows.Forms.Button();
             this.btnClearChart = new System.Windows.Forms.Button();
             this.btnReZero = new System.Windows.Forms.Button();
@@ -74,7 +76,6 @@ namespace Multitech_1._0._0
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
             this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
-            this.chkLogging = new System.Windows.Forms.CheckBox();
             this.colorD1 = new System.Windows.Forms.ColorDialog();
             this.btnCD1 = new System.Windows.Forms.Button();
             this.btnCD2 = new System.Windows.Forms.Button();
@@ -93,6 +94,7 @@ namespace Multitech_1._0._0
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.btnFormKalibrasi);
             this.groupBox1.Controls.Add(this.chkLogging);
             this.groupBox1.Controls.Add(this.btnBukaLog);
             this.groupBox1.Controls.Add(this.btnClearChart);
@@ -110,9 +112,30 @@ namespace Multitech_1._0._0
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Kontrol alat";
             // 
+            // btnFormKalibrasi
+            // 
+            this.btnFormKalibrasi.Location = new System.Drawing.Point(652, 18);
+            this.btnFormKalibrasi.Name = "btnFormKalibrasi";
+            this.btnFormKalibrasi.Size = new System.Drawing.Size(75, 23);
+            this.btnFormKalibrasi.TabIndex = 10;
+            this.btnFormKalibrasi.Text = "Kalibrasi";
+            this.btnFormKalibrasi.UseVisualStyleBackColor = true;
+            this.btnFormKalibrasi.Click += new System.EventHandler(this.btnFormKalibrasi_Click);
+            // 
+            // chkLogging
+            // 
+            this.chkLogging.AutoSize = true;
+            this.chkLogging.Location = new System.Drawing.Point(582, 24);
+            this.chkLogging.Name = "chkLogging";
+            this.chkLogging.Size = new System.Drawing.Size(64, 17);
+            this.chkLogging.TabIndex = 9;
+            this.chkLogging.Text = "Logging";
+            this.chkLogging.UseVisualStyleBackColor = true;
+            this.chkLogging.CheckedChanged += new System.EventHandler(this.chkLogging_CheckedChanged);
+            // 
             // btnBukaLog
             // 
-            this.btnBukaLog.Location = new System.Drawing.Point(601, 20);
+            this.btnBukaLog.Location = new System.Drawing.Point(501, 19);
             this.btnBukaLog.Name = "btnBukaLog";
             this.btnBukaLog.Size = new System.Drawing.Size(75, 23);
             this.btnBukaLog.TabIndex = 8;
@@ -122,9 +145,9 @@ namespace Multitech_1._0._0
             // 
             // btnClearChart
             // 
-            this.btnClearChart.Location = new System.Drawing.Point(520, 20);
+            this.btnClearChart.Location = new System.Drawing.Point(451, 19);
             this.btnClearChart.Name = "btnClearChart";
-            this.btnClearChart.Size = new System.Drawing.Size(75, 23);
+            this.btnClearChart.Size = new System.Drawing.Size(44, 23);
             this.btnClearChart.TabIndex = 7;
             this.btnClearChart.Text = "Clear";
             this.btnClearChart.UseVisualStyleBackColor = true;
@@ -132,9 +155,9 @@ namespace Multitech_1._0._0
             // 
             // btnReZero
             // 
-            this.btnReZero.Location = new System.Drawing.Point(439, 20);
+            this.btnReZero.Location = new System.Drawing.Point(401, 19);
             this.btnReZero.Name = "btnReZero";
-            this.btnReZero.Size = new System.Drawing.Size(75, 23);
+            this.btnReZero.Size = new System.Drawing.Size(44, 23);
             this.btnReZero.TabIndex = 6;
             this.btnReZero.Text = "Zero";
             this.btnReZero.UseVisualStyleBackColor = true;
@@ -143,7 +166,7 @@ namespace Multitech_1._0._0
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(391, 23);
+            this.label1.Location = new System.Drawing.Point(353, 23);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(42, 13);
             this.label1.TabIndex = 5;
@@ -151,7 +174,7 @@ namespace Multitech_1._0._0
             // 
             // timeout
             // 
-            this.timeout.Location = new System.Drawing.Point(329, 21);
+            this.timeout.Location = new System.Drawing.Point(291, 20);
             this.timeout.Name = "timeout";
             this.timeout.Size = new System.Drawing.Size(56, 20);
             this.timeout.TabIndex = 4;
@@ -159,7 +182,7 @@ namespace Multitech_1._0._0
             // 
             // Start_timer
             // 
-            this.Start_timer.Location = new System.Drawing.Point(248, 20);
+            this.Start_timer.Location = new System.Drawing.Point(210, 19);
             this.Start_timer.Name = "Start_timer";
             this.Start_timer.Size = new System.Drawing.Size(75, 23);
             this.Start_timer.TabIndex = 3;
@@ -169,9 +192,9 @@ namespace Multitech_1._0._0
             // 
             // Button_Connect
             // 
-            this.Button_Connect.Location = new System.Drawing.Point(167, 19);
+            this.Button_Connect.Location = new System.Drawing.Point(146, 19);
             this.Button_Connect.Name = "Button_Connect";
-            this.Button_Connect.Size = new System.Drawing.Size(75, 23);
+            this.Button_Connect.Size = new System.Drawing.Size(58, 23);
             this.Button_Connect.TabIndex = 2;
             this.Button_Connect.Text = "Record";
             this.Button_Connect.UseVisualStyleBackColor = true;
@@ -181,7 +204,7 @@ namespace Multitech_1._0._0
             // 
             this.Button_Disconnect.Location = new System.Drawing.Point(86, 19);
             this.Button_Disconnect.Name = "Button_Disconnect";
-            this.Button_Disconnect.Size = new System.Drawing.Size(75, 23);
+            this.Button_Disconnect.Size = new System.Drawing.Size(54, 23);
             this.Button_Disconnect.TabIndex = 1;
             this.Button_Disconnect.Text = "Stop";
             this.Button_Disconnect.UseVisualStyleBackColor = true;
@@ -202,7 +225,6 @@ namespace Multitech_1._0._0
             // 
             // timer1
             // 
-            this.timer1.Interval = 50;
             this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
             // 
             // TextBox_ReceivedMessage
@@ -429,17 +451,6 @@ namespace Multitech_1._0._0
             // 
             this.openFileDialog1.FileName = "openFileDialog1";
             // 
-            // chkLogging
-            // 
-            this.chkLogging.AutoSize = true;
-            this.chkLogging.Location = new System.Drawing.Point(683, 24);
-            this.chkLogging.Name = "chkLogging";
-            this.chkLogging.Size = new System.Drawing.Size(64, 17);
-            this.chkLogging.TabIndex = 9;
-            this.chkLogging.Text = "Logging";
-            this.chkLogging.UseVisualStyleBackColor = true;
-            this.chkLogging.CheckedChanged += new System.EventHandler(this.chkLogging_CheckedChanged);
-            // 
             // btnCD1
             // 
             this.btnCD1.BackColor = System.Drawing.Color.Transparent;
@@ -584,7 +595,6 @@ namespace Multitech_1._0._0
         private System.Windows.Forms.Button Button_Connect;
         private System.Windows.Forms.Button Button_Disconnect;
         private System.Windows.Forms.ComboBox ComboBox_AvailableSerialPorts;
-        private System.IO.Ports.SerialPort serialPort1;
         private System.Windows.Forms.Timer timer1;
         private System.Windows.Forms.TextBox TextBox_ReceivedMessage;
         private System.Windows.Forms.DataVisualization.Charting.Chart chart1;
@@ -623,6 +633,8 @@ namespace Multitech_1._0._0
         private System.Windows.Forms.Button btnCD8;
         private System.Windows.Forms.Button btnCD9;
         private System.Windows.Forms.Button btnCD10;
+        private System.Windows.Forms.Button btnFormKalibrasi;
+        internal System.IO.Ports.SerialPort serialPort1;
     }
 }
 

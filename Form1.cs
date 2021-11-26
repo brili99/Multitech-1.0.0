@@ -15,12 +15,13 @@ namespace Multitech_1._0._0
 {
     public partial class Form1 : Form
     {
-
+        FormKalibrasi form_kalibrasi;
         Stopwatch sw = new Stopwatch();
         int b_sw = 0;
         String ReceivedMessage;
         public double[] newtonData = new double[10];
         string fileName = @"kosong";
+        String actionShowKalibrasi = "";
         int baudRate = 115200;
         string tmpdata, tmpdata2;
         double tmpdata3;
@@ -46,13 +47,16 @@ namespace Multitech_1._0._0
 
         private void btnReZero_Click(object sender, EventArgs e)
         {
-            //for (int x = 0; x < kalibrasi_data.Length; x++)
-            //{
-            //    kalibrasi_data[x] = current_data[x];
-            //}
-            //kirim perintah 't' ke device
-            loggingBox("Mengirim signal tare");
-            serialPort1.WriteLine("t");
+            if (serialPort1.IsOpen == true)
+            {
+                //kirim perintah 't' ke device
+                loggingBox("Mengirim signal tare");
+                serialPort1.WriteLine("t");
+            }
+            else
+            {
+                loggingBox("Mohon koneksikan ke device terlebih dahulu");
+            }
         }
 
         private void btnClearChart_Click(object sender, EventArgs e)
@@ -137,10 +141,19 @@ namespace Multitech_1._0._0
             //    System.Windows.Forms.MessageBox.Show("Please input save log location.");
             //    return;
             //}
+
             try
             {
-                serialPort1.PortName =
-                (String)ComboBox_AvailableSerialPorts.SelectedItem;
+                try
+                {
+                    serialPort1.PortName =
+                    (String)ComboBox_AvailableSerialPorts.SelectedItem;
+                }
+                catch (ArgumentNullException)
+                {
+                    loggingBox("Mohon masukan pilihan koneksi dengan benar");
+                    System.Windows.Forms.MessageBox.Show("Mohon masukan pilihan koneksi dengan benar");
+                }
             }
             catch (InvalidOperationException err)
             {
@@ -240,7 +253,7 @@ namespace Multitech_1._0._0
             lastTime[0] = DateTimeOffset.Now.ToUnixTimeMilliseconds();
         }
 
-        private void loggingBox(String data)
+        public void loggingBox(String data)
         {
             TextBox_ReceivedMessage.Text =
                         TextBox_ReceivedMessage.Text + data + Environment.NewLine;
@@ -285,6 +298,7 @@ namespace Multitech_1._0._0
             }
             if (serialPort1.IsOpen == true)
             {
+                ReceivedMessage = "";
                 //read serial port
                 try
                 {
@@ -316,51 +330,94 @@ namespace Multitech_1._0._0
                 //last successfull receving data
                 lastTime[0] = lastTime[1];
                 lastTime[1] = DateTimeOffset.Now.ToUnixTimeMilliseconds();
-
-                if (ReceivedMessage.First() == '~')
+                try
                 {
-                    //data filter
-                    ReceivedMessage = ReceivedMessage.Replace("~", "");
-                    ReceivedMessage = ReceivedMessage.Replace("#", "");
-                    ReceivedMessage.Trim();
-
-                    String[] dataReadline = ReceivedMessage.Split(' ');
-                    if (dataReadline.Length != 10)
+                    if (ReceivedMessage.First() == '|')
                     {
-                        return;
-                    }
-                    for (int x = 0; x < 10; x++)
-                    {
-                        try
+                        //data filter
+                        ReceivedMessage = ReceivedMessage.Replace("|", "");
+                        ReceivedMessage = ReceivedMessage.Replace("#", "");
+                        ReceivedMessage.Trim();
+                        //loggingBox("G: " + ReceivedMessage);
+                        String[] dataReadline = ReceivedMessage.Split(' ');
+                        if (dataReadline.Length == 10)
                         {
-                            tmpdata3 = double.Parse(dataReadline[x]);
-                            current_data[x] = tmpdata3 / 100;
-                            //newtonData[x] = 0.0098 * (current_data[x] - kalibrasi_data[x]);
-                            newtonData[x] = 0.0098 * (current_data[x]);
+                            for (int x = 0; x < 10; x++)
+                            {
+                                try
+                                {
+                                    tmpdata3 = double.Parse(dataReadline[x]);
+                                    dataReadline[x] = Convert.ToString(tmpdata3 / 10000);
+                                }
+                                catch (FormatException) { return; }
+                            }
+
+                            actionShowKalibrasi = ReceivedMessage;
+                            form_kalibrasi.inputValLoad1.Text = dataReadline[0];
+                            form_kalibrasi.inputValLoad2.Text = dataReadline[1];
+                            form_kalibrasi.inputValLoad3.Text = dataReadline[2];
+                            form_kalibrasi.inputValLoad4.Text = dataReadline[3];
+                            form_kalibrasi.inputValLoad5.Text = dataReadline[4];
+                            form_kalibrasi.inputValLoad6.Text = dataReadline[5];
+                            form_kalibrasi.inputValLoad7.Text = dataReadline[6];
+                            form_kalibrasi.inputValLoad8.Text = dataReadline[7];
+                            form_kalibrasi.inputValLoad9.Text = dataReadline[8];
+                            form_kalibrasi.inputValLoad10.Text = dataReadline[9];
                         }
-                        catch (FormatException) { return; }
                     }
-
-                    //konversi ke newton
-
-                    ////loggingBox(tmpdata2);
-                    //tmpdata2 = null;
-
-                    if (loggingState)
+                    else if (ReceivedMessage.First() == '~')
                     {
-                        //logging
-                        create_file_logging();
-                        loggingData(DateTime.Now.ToString("MM/dd/yyyy HH:mm:ss.fff"), newtonData);
+                        //data filter
+                        ReceivedMessage = ReceivedMessage.Replace("~", "");
+                        ReceivedMessage = ReceivedMessage.Replace("#", "");
+                        ReceivedMessage.Trim();
+
+                        String[] dataReadline = ReceivedMessage.Split(' ');
+                        if (dataReadline.Length != 10)
+                        {
+                            return;
+                        }
+                        for (int x = 0; x < 10; x++)
+                        {
+                            try
+                            {
+                                tmpdata3 = double.Parse(dataReadline[x]);
+                                current_data[x] = tmpdata3 / 100;
+                                //newtonData[x] = 0.0098 * (current_data[x] - kalibrasi_data[x]);
+                                newtonData[x] = 0.0098 * (current_data[x]);
+                            }
+                            catch (FormatException) { return; }
+                        }
+
+                        //konversi ke newton
+
+                        ////loggingBox(tmpdata2);
+                        //tmpdata2 = null;
+
+                        if (loggingState)
+                        {
+                            //logging
+                            create_file_logging();
+                            loggingData(DateTime.Now.ToString("MM/dd/yyyy HH:mm:ss.fff"), newtonData);
+                        }
+
+
+
+                        //Thread t1 = new Thread(() => loggingData(DateTime.Now.ToString("MM/dd/yyyy HH:mm:ss.fff"), dataReadline));
+                        //t1.Start();
+
+                        //for chart
+                        chartingData(newtonData);
+
+                        serialPort1.DiscardInBuffer();
                     }
-
-
-
-                    //Thread t1 = new Thread(() => loggingData(DateTime.Now.ToString("MM/dd/yyyy HH:mm:ss.fff"), dataReadline));
-                    //t1.Start();
-
-                    //for chart
-                    chartingData(newtonData);
                 }
+                catch (InvalidOperationException)
+                {
+                    return;
+                }
+
+
             }
         }
 
@@ -689,7 +746,7 @@ namespace Multitech_1._0._0
 
         private void btnBukaLog_Click(object sender, EventArgs e)
         {
-            if(chkLogging.Checked)
+            if (chkLogging.Checked)
             {
 
                 System.Windows.Forms.MessageBox.Show("Matikan terlebih dahulu loggingnya");
@@ -821,6 +878,24 @@ namespace Multitech_1._0._0
             {
                 btnCD10.BackColor = color10.Color;
                 chart1.Series[9].Color = color10.Color;
+            }
+        }
+
+        private void btnFormKalibrasi_Click(object sender, EventArgs e)
+        {
+            if (serialPort1.IsOpen == true)
+            {
+                serialPort1.WriteLine("g");
+                form_kalibrasi = new FormKalibrasi(this);
+                actionShowKalibrasi = "";
+                if (!form_kalibrasi.Visible)
+                {
+                    form_kalibrasi.Show();
+                }
+            }
+            else
+            {
+                loggingBox("Mohon koneksikan ke device terlebih dahulu");
             }
         }
 
